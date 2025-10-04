@@ -31,6 +31,7 @@ class Task(StrEnum):
     gfd_verification = auto()
     nd_verification = auto()
     pfd_verification = auto()
+    pac_verification = auto()
 
 
 class Algorithm(StrEnum):
@@ -66,6 +67,7 @@ class Algorithm(StrEnum):
     egfd_verifier = auto()
     naive_nd_verifier = auto()
     naive_pfd_verifier = auto()
+    domain_pac_verifier = auto()
 
 
 HELP = 'help'
@@ -149,6 +151,7 @@ Currently, the console version of Desbordante supports:
 15) Verification of approximate unique column combinations
 16) Verification of numerical dependencies
 17) Verification of probabilistic functional dependencies
+18) Verification of probabilistic approximate constraints
 
 If you need other types, you should look into the C++ code, the Python
 bindings or the Web version.
@@ -329,6 +332,12 @@ Generation and Applications in pay-as-you-go data integration systems” by
 Daisy Zhe Wang et al.
 Algorithms: NAIVE_PFD_VERIFIER
 Default: NAIVE_PFD_VERIFIER
+'''
+PAC_VERIFICATION_HELP = '''Verify whether a given probabilistic approximate constraint holds on a
+specified dataset. For more information, refer to "Checks and Balances: Monitoring Data Quality
+Problems in Network Traffic Databases" by Flip Korn, S. Muthukrishnan and Yunyue Zhu.
+Algorithms: DOMAIN_PAC_VERIFIER
+Default: DOMAIN_PAC_VERIFIER
 '''
 PYRO_HELP = '''A modern algorithm for discovery of approximate functional
 dependencies. Approximate functional dependencies are defined in the
@@ -511,6 +520,11 @@ verifying whether a given probabilistic functional dependency holds. For
 more information, refer to “Functional Dependency Generation and Applications 
 in pay-as-you-go data integration systems” by Daisy Zhe Wang et al.
 '''
+DOMAIN_PAC_VERIFIER_HELP = '''An algorithm for verifying whether a given domain probabilistic
+approximate constraint holds, based on elbow method. For more information, refer to "Checks and
+Balances: Monitoring Data Quality Problems in Network Traffic Databases by Flip Korn,
+S. Muthukrishnan and Yunyue Zhu.
+'''
 
 OPTION_TYPES = {
     str: 'STRING',
@@ -539,7 +553,8 @@ TASK_HELP_PAGES = {
     Task.aucc_verification: AUCC_VERIFICATION_HELP,
     Task.gfd_verification: GFD_VERIFICATION_HELP,
     Task.nd_verification: ND_VERIFICATION_HELP,
-    Task.pfd_verification: PFD_VERIFICATION_HELP
+    Task.pfd_verification: PFD_VERIFICATION_HELP,
+    Task.pac_verification: PAC_VERIFICATION_HELP,
 }
 
 ALGO_HELP_PAGES = {
@@ -574,7 +589,8 @@ ALGO_HELP_PAGES = {
     Algorithm.egfd_verifier: GFD_VERIFIER_HELP,
     Algorithm.apriori: APRIORI_HELP,
     Algorithm.naive_nd_verifier: NAIVE_ND_VERIFIER_HELP,
-    Algorithm.naive_pfd_verifier: NAIVE_PFD_VERIFIER_HELP
+    Algorithm.naive_pfd_verifier: NAIVE_PFD_VERIFIER_HELP,
+    Algorithm.domain_pac_verifier: DOMAIN_PAC_VERIFIER_HELP,
 }
 
 TaskInfo = namedtuple('TaskInfo', ['algos', 'default'])
@@ -619,6 +635,7 @@ TASK_INFO = {
                                    Algorithm.naive_nd_verifier),
     Task.pfd_verification: TaskInfo([Algorithm.naive_pfd_verifier],
                                    Algorithm.naive_pfd_verifier),
+    Task.pac_verification: TaskInfo([Algorithm.domain_pac_verifier], Algorithm.domain_pac_verifier),
 }
 
 ALGOS = {
@@ -653,7 +670,8 @@ ALGOS = {
     Algorithm.egfd_verifier: desbordante.gfd_verification.algorithms.EGfdValid,
     Algorithm.apriori: desbordante.ar.algorithms.Apriori,
     Algorithm.naive_nd_verifier: desbordante.nd_verification.algorithms.NDVerifier,
-    Algorithm.naive_pfd_verifier: desbordante.pfd_verification.algorithms.PFDVerifier
+    Algorithm.naive_pfd_verifier: desbordante.pfd_verification.algorithms.PFDVerifier,
+    Algorithm.domain_pac_verifier: desbordante.pac_verification.algorithms.cli.DomainPACVerifierCLI,
 }
 
 
@@ -789,6 +807,8 @@ def get_algo_result(algo: desbordante.Algorithm, algo_name: str, provided_option
                               f'holds with error = {error}')
             case Algorithm.icde09_mfd_verifier:
                 result = algo.mfd_holds()
+            case algo_name if algo_name in TASK_INFO[Task.pac_verification].algos:
+                result = algo.get_pac()
             case algo_name if algo_name in TASK_INFO[Task.fd].algos:
                 result = algo.get_fds()
             case Algorithm.cords:
