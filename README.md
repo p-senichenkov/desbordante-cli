@@ -51,7 +51,7 @@ The currently supported data patterns are:
 * Fuzzy algebraic constraints (discovery)
 * Differential Dependencies (discovery)
 * Unique column combinations:
-   - Approximate unique column combination, with g<sub>1</sub> metric (discovery and validation)
+   - Exact unique column combination (discovery and validation)
    - Approximate unique column combination, with $g_1$ metric (discovery and validation)
 * Association rules (discovery)
 * Probabilistic approximate constraints (validation):
