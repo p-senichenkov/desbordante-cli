@@ -114,63 +114,6 @@ Dependency Discovery” paper by Z. Abedjan et al.
 
 '''
 
-snapshots['test_algos_help_pages[domain_pac_verifier] domain_pac_verifier'] = '''An algorithm for verifying whether a given domain probabilistic
-approximate constraint holds, based on elbow method. For more information, refer to "Checks and
-Balances: Monitoring Data Quality Problems in Network Traffic Databases by Flip Korn,
-S. Muthukrishnan and Yunyue Zhu.
-
---center=STRING
-\tN-ary ball center.
-\tFor multiple values, specify multiple times 
-\t(e.g., --center=1 --center=2)
-
---column_indices=INTEGER
-\tColumn indices.
-\tFor multiple values, specify multiple times 
-\t(e.g., --column_indices=1 --column_indices=2)
-
---diagonal_threshold=FLOAT
-\tMaximal k such that diagonal segment of ECDF with slope coefficient of k is considered horizontal, i. e. maximal ratio m/N such that an addition of m values on a table containing N rows is not considered a change (default is 1e-5).
-
---dist_from_null_is_infinity=BOOLEAN
-\tspecify whether distance from NULL value is infinity (if not, it is 0)
-
---domain_type=STRING
-\tDomain type
-[ball|parallelepiped|custom_domain]
-
---epsilon_steps=INTEGER
-\tSelect how many epsilon values to check while verifying PAC (default is 100).
-
---leveling_coefficients=FLOAT
-\tCoefficients by which distances between individual coordinates are multiplied (for domains based on coordinate-wise metrics). Default is [1, 1, ..., 1].
-\tFor multiple values, specify multiple times 
-\t(e.g., --leveling_coefficients=1 --leveling_coefficients=2)
-
---lower_bound=STRING
-\tLower bound of n-ary parallelepiped.
-\tFor multiple values, specify multiple times 
-\t(e.g., --lower_bound=1 --lower_bound=2)
-
---max_epsilon=FLOAT
-\tMaximal value of epsilon, which shows how much values deviate from exact dependency (default is 0).
-
---min_delta=FLOAT
-\tMinimal value of delta, which is a probability at which values satisfy the dependency (default is 0.9).
-
---min_epsilon=FLOAT
-\tMinimal value of epsilon, which shows how much values deviate from exact dependency (default is 1).
-
---radius=FLOAT
-\tRadius of n-ary ball.
-
---upper_bound=STRING
-\tUpper bound of n-ary parallelepiped.
-\tFor multiple values, specify multiple times 
-\t(e.g., --upper_bound=1 --upper_bound=2)
-
-'''
-
 snapshots['test_algos_help_pages[egfd_verifier] egfd_verifier'] = '''Algorithm for verifying whether a given
 graph functional dependency holds. For more information about the primitive
 refer to “Functional Dependencies for Graphs” by Wenfei Fan et al.
@@ -748,7 +691,6 @@ Currently, the console version of Desbordante supports:
 15) Verification of approximate unique column combinations
 16) Verification of numerical dependencies
 17) Verification of probabilistic functional dependencies
-18) Verification of probabilistic approximate constraints
 
 If you need other types, you should look into the C++ code, the Python
 bindings or the Web version.
@@ -921,14 +863,6 @@ et al.
 
 Algorithms: FASTOD, ORDER
 Default: FASTOD
-
-'''
-
-snapshots['test_tasks_help_pages[pac_verification] pac_verification'] = '''Verify whether a given probabilistic approximate constraint holds on a
-specified dataset. For more information, refer to "Checks and Balances: Monitoring Data Quality
-Problems in Network Traffic Databases" by Flip Korn, S. Muthukrishnan and Yunyue Zhu.
-Algorithms: DOMAIN_PAC_VERIFIER
-Default: DOMAIN_PAC_VERIFIER
 
 '''
 

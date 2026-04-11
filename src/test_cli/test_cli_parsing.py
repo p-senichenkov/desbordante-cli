@@ -5,11 +5,9 @@ import desbordante
 
 from src.cli import desbordante_cli, ALGOS
 
-# There is a problem with get_opts() method for these algos
+# There is a problem with get_opts() method for this algos
 UNFIXED_ALGOS = ['tane', 'pfdtane', 'cords', 'spider', 'faida', 'fd_first', 'split','naive_gfd_verifier',
-                 'gfd_verifier', 'egfd_verifier', 'apriori', 'naive_pfd_verifier',
-                 # Domain PAC verifier has conditional options, so it cannot be tested here
-                 'domain_pac_verifier']
+                 'gfd_verifier', 'egfd_verifier', 'apriori', 'naive_pfd_verifier']
 
 DATA_OPTS = ['table', 'tables', 'difference_table']
 SKIPPED_OPTS = ['tables_list', 'tables_directory']
